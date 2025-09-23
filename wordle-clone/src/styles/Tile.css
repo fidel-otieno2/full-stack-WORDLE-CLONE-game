@@ -1,0 +1,249 @@
+.tile {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  background-color: hsl(118, 91%, 25%);
+  border: 2px solid #3a3a3c;
+  box-sizing: border-box;
+  user-select: none;
+  animation: pop 0.25s ease-in-out;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.4s ease, background-color 0.3s ease;
+}
+
+/* Animation: Pop */
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Flip reveal animation */
+@keyframes flip {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(90deg); background-color: #121213; }
+  100% { transform: rotateX(0deg); }
+}
+
+.tile.revealed {
+  animation: flip 0.6s ease forwards;
+  transform-origin: bottom;
+}
+
+/* Wordle status styles */
+.tile.correct {
+  background: linear-gradient(145deg, #6aaa64, #538d4e);
+  border-color: #538d4e;
+  box-shadow: 0 0 10px #538d4eaa;
+}
+
+.tile.present {
+  background: linear-gradient(145deg, #c9b458, #b59f3b);
+  border-color: #b59f3b;
+  box-shadow: 0 0 10px #b59f3baa;
+}
+
+.tile.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+  opacity: 0.85;
+}
+
+/* Empty tile border */
+.tile:empty {
+  border-color: #3a3a3c;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .tile {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+}
+.tile.special {
+  width: 80px;
+  height: 60px;
+  font-size: 1.1rem;
+  background: linear-gradient(145deg, #4b6cb7, #182848);
+  color: #ffffff;
+  border-radius: 0.5rem;
+}
+.tile.special:hover {
+  background: linear-gradient(145deg, #5d8df4, #29438a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+}
+.tile.special.correct {
+  background-color: #538d4e;
+  border-color: #538d4e;
+  color: white;
+}
+.tile.special.present {
+  background-color: #b59f3b;
+  border-color: #b59f3b;
+  color: white;
+}
+.tile.special.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+  color: #888;
+}
+.tile.special:hover {
+  background: linear-gradient(145deg, #5d8df4, #29438a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+}
+.tile.special:empty {
+  border-color: #3a3a3c;
+  background: linear-gradient(145deg, #4b6cb7, #182848);
+  color: #ffffff;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.revealed {
+  animation: flip 0.6s ease forwards;
+  transform-origin: bottom;
+  background-color: #121213;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.correct {
+  background: linear-gradient(145deg, #6aaa64, #538d4e);
+  border-color: #538d4e;
+  box-shadow: 0 0 10px #538d4eaa;
+}
+.tile.special.present {
+  background: linear-gradient(145deg, #c9b458, #b59f3b);
+  border-color: #b59f3b;
+  box-shadow: 0 0 10px #b59f3baa;
+}
+.tile.special.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+  opacity: 0.85;
+  box-shadow: none;
+}
+.tile.special:empty {
+  border-color: #3a3a3c;
+  background: linear-gradient(145deg, #4b6cb7, #182848);
+  color: #ffffff;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.revealed {
+  animation: flip 0.6s ease forwards;
+  transform-origin: bottom;
+  background-color: #121213;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.correct {
+  background: linear-gradient(145deg, #6aaa64, #538d4e);
+  border-color: #538d4e;
+  box-shadow: 0 0 10px #538d4eaa;
+}
+.tile.special.present {
+  background: linear-gradient(145deg, #c9b458, #b59f3b);
+  border-color: #b59f3b;
+  box-shadow: 0 0 10px #b59f3baa;
+}
+.tile.special.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+  opacity: 0.85;
+  box-shadow: none;
+}
+.tile.special:empty {
+  border-color: #3a3a3c;
+  background: linear-gradient(145deg, #4b6cb7, #182848);
+  color: #ffffff;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.revealed {
+  animation: flip 0.6s ease forwards;
+  transform-origin: bottom;
+  background-color: #121213;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.correct {
+  background: linear-gradient(145deg, #6aaa64, #538d4e);
+  border-color: #538d4e;
+  box-shadow: 0 0 10px #538d4eaa;
+}
+.tile.special.present {
+  background: linear-gradient(145deg, #c9b458, #b59f3b);
+  border-color: #b59f3b;
+  box-shadow: 0 0 10px #b59f3baa;
+}
+.tile.special.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+  opacity: 0.85;
+  box-shadow: none;
+}
+.tile.special:empty {
+  border-color: #3a3a3c;
+  background: linear-gradient(145deg, #4b6cb7, #182848);
+  color: #ffffff;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.revealed {
+  animation: flip 0.6s ease forwards;
+  transform-origin: bottom;
+  background-color: #121213;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
+.tile.special.correct {
+  background: linear-gradient(145deg, #6aaa64, #538d4e);
+  border-color: #538d4e;
+  box-shadow: 0 0 10px #538d4eaa;
+}
+.tile.special.present {
+  background: linear-gradient(145deg, #c9b458, #b59f3b);
+  border-color: #b59f3b;
+  box-shadow: 0 0 10px #b59f3baa;
+}
+.tile.special.absent {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+  opacity: 0.85;
+  box-shadow: none;
+}
+.tile.special:empty {
+  border-color: #3a3a3c;
+  background: linear-gradient(145deg, #4b6cb7, #182848);
+  color: #ffffff;
+  box-shadow: none;
+  cursor: default;
+  user-select: none;
+  transition: none;
+}
