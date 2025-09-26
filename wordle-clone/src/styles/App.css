@@ -1,0 +1,63 @@
+.app-container {
+  background: linear-gradient(to bottom right, #191970, #0d1a2b);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid #4c5a6a;
+  color: #ffffff;
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.title {
+  color: #ffffff;
+  border-bottom: 2px solid #4c5a6a;
+  padding-bottom: 0.5rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.result {
+  margin-top: 1.5rem;
+  font-size: 1.3rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.restart-btn {
+  margin-top: 1.5rem;
+  background: linear-gradient(to right, #32cd32, #228b22);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.9em 2em;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.restart-btn:hover {
+  background: linear-gradient(to right, #28a428, #1e7f1e);
+  transform: scale(1.05);
+}
+
+.error {
+  color: #fffbe6;
+  background: #d19c28;
+  border-radius: 0.5rem;
+  padding: 0.6em 1em;
+  margin: 1em auto 0 auto;
+  max-width: 340px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  line-height: 1.4;
+}

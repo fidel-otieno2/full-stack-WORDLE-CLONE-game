@@ -1,114 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
-import './WordleBoard.css';
+import React from 'react';
+import Tile from './Tile';
+import '../styles/WordleBoard.css';
 
-const WordleBoard = () => {
-  const [game, setGame] = useState(null);
-  const [currentGuess, setCurrentGuess] = useState('');
-  const [guesses, setGuesses] = useState([]);
-  const [feedback, setFeedback] = useState([]);
-  const [message, setMessage] = useState('');
-  const navigate = useNavigate();
+function WordleBoard({ guesses, currentGuess, solution }) {
+  const maxRows = 6;
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    startGame();
-  }, [navigate]);
+  // Only add current guess if game is still in progress
+  const filledRows = [...guesses];
+  if (guesses.length < maxRows) filledRows.push({ word: currentGuess, result: null, isCorrect: false });
 
-  const startGame = async () => {
-    try {
-      const response = await api.post('/game/start');
-      setGame(response.data);
-      setGuesses([]);
-      setFeedback([]);
-      setCurrentGuess('');
-      setMessage('');
-    } catch (err) {
-      setMessage('Failed to start game');
-    }
-  };
-
-  const submitGuess = async () => {
-    if (currentGuess.length !== 5) return;
-    try {
-      const response = await api.post('/game/guess', { guess: currentGuess });
-      const newFeedback = response.data.feedback;
-      setGuesses([...guesses, currentGuess]);
-      setFeedback([...feedback, newFeedback]);
-      setCurrentGuess('');
-      if (response.data.completed) {
-        setMessage(response.data.message);
-      }
-    } catch (err) {
-      setMessage('Invalid guess');
-    }
-  };
-
-  const handleKeyPress = (key) => {
-    if (key === 'ENTER') {
-      submitGuess();
-    } else if (key === 'BACKSPACE') {
-      setCurrentGuess(currentGuess.slice(0, -1));
-    } else if (currentGuess.length < 5) {
-      setCurrentGuess(currentGuess + key);
-    }
-  };
-
-  const renderGrid = () => {
-    const grid = [];
-    for (let i = 0; i < 6; i++) {
-      const row = [];
-      for (let j = 0; j < 5; j++) {
-        let letter = '';
-        let color = 'gray';
-        if (i < guesses.length) {
-          letter = guesses[i][j];
-          color = feedback[i][j];
-        } else if (i === guesses.length) {
-          letter = currentGuess[j] || '';
-        }
-        row.push(
-          <div key={j} className={`cell ${color}`}>
-            {letter}
-          </div>
-        );
-      }
-      grid.push(<div key={i} className="row">{row}</div>);
-    }
-    return grid;
-  };
-
-  const renderKeyboard = () => {
-    const keys = [
-      ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-      ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-      ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACKSPACE']
-    ];
-    return keys.map((row, i) => (
-      <div key={i} className="keyboard-row">
-        {row.map(key => (
-          <button key={key} onClick={() => handleKeyPress(key)}>
-            {key}
-          </button>
-        ))}
-      </div>
-    ));
-  };
+  const emptyRows = Array(maxRows - filledRows.length).fill({ word: '', result: null, isCorrect: false });
+  const rows = [...filledRows, ...emptyRows].slice(0, maxRows); // Always 6 rows
 
   return (
-    <div className="wordle-board">
-      <h1>Wordle Clone</h1>
-      <button onClick={startGame}>New Game</button>
-      <div className="grid">{renderGrid()}</div>
-      <div className="keyboard">{renderKeyboard()}</div>
-      <p>{message}</p>
+    <div className="board">
+      {rows.map((guessObj, rowIndex) => (
+        <div className="board-row" key={rowIndex}>
+          {[...Array(5)].map((_, colIndex) => (
+            <Tile
+              key={colIndex}
+              value={guessObj.word[colIndex] || ''}
+              status={getStatus(guessObj, colIndex, solution, rowIndex < guesses.length)}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
-};
+}
+
+// Determines tile color for each letter
+function getStatus(guessObj, idx, solution, isSubmitted) {
+  if (!isSubmitted || !guessObj.word) return '';
+
+  // If we have API result, use it
+  if (guessObj.result && guessObj.result[idx]) {
+    return guessObj.result[idx];
+  }
+
+  // Fallback to client-side calculation if no API result
+  const word = guessObj.word.toUpperCase();
+  solution = solution.toUpperCase();
+
+  const guessArr = word.split('');
+  const solArr = solution.split('');
+  const statusArr = Array(5).fill('absent');
+  const solUsed = Array(5).fill(false);
+
+  // 1st pass: check for correct letters
+  for (let i = 0; i < 5; i++) {
+    if (guessArr[i] === solArr[i]) {
+      statusArr[i] = 'correct';
+      solUsed[i] = true;
+    }
+  }
+
+  // 2nd pass: check for present letters
+  for (let i = 0; i < 5; i++) {
+    if (statusArr[i] === 'correct') continue;
+    for (let j = 0; j < 5; j++) {
+      if (!solUsed[j] && guessArr[i] === solArr[j]) {
+        statusArr[i] = 'present';
+        solUsed[j] = true;
+        break;
+      }
+    }
+  }
+
+  return statusArr[idx];
+}
 
 export default WordleBoard;
