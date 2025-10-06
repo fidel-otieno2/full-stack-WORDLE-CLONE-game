@@ -8,7 +8,8 @@ class Config:
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'supersecret')
     database_url = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost/wordle')
     if database_url:
-        database_url = database_url.replace('postgresql+psycopg://', 'postgresql://')
+        if 'postgresql+psycopg://' not in database_url:
+            database_url = database_url.replace('postgresql://', 'postgresql+psycopg://')
         if 'sslmode' not in database_url:
             database_url += '?sslmode=require'
     SQLALCHEMY_DATABASE_URI = database_url
