@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { authService } from './auth';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://full-stack-wordle-clone-game-4.onrender.com';
 
 // Create axios instance with default config
 const apiClient = axios.create({
