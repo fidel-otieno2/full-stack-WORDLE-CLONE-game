@@ -115,11 +115,22 @@ npm run dev  # Starts the frontend dev server on port 5173
 5. Add environment variable: `VITE_API_URL=https://your-backend-url.com`
 6. Deploy
 
-#### Backend Deployment
+#### Backend Deployment on Render
 
-- Deploy the Flask app to Heroku, Railway, or any Python hosting service
-- Ensure the database is set up (SQLite for dev, PostgreSQL for prod)
-- Set environment variables for JWT secret, database URL, etc.
+1. Push your backend code to a GitHub repository if not already done.
+2. Go to https://render.com and sign up or log in.
+3. Click "New" and select "Web Service".
+4. Connect your GitHub repository containing the backend code.
+5. Set the root directory to `wordle-backend`.
+6. For the build command, use: `pip install -r requirements.txt`.
+7. For the start command, use: `gunicorn app:app`.
+8. Set environment variables in Render dashboard:
+   - `DATABASE_URL` (your database connection string, e.g. PostgreSQL URL from Render's database service)
+   - `JWT_SECRET_KEY` (your JWT secret key - generate a secure random string)
+9. Click "Create Web Service" to start the deployment.
+10. Render will build and deploy your backend, providing a public URL.
+
+Once deployed, update your frontend's `VITE_API_URL` environment variable to point to the Render backend URL.
 
 ---
 
