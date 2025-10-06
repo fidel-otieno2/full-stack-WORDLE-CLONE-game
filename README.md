@@ -2,7 +2,7 @@
 
 A full stack Wordle game clone built with **React** and **Vite** for the frontend, and **Flask** for the backend API. This project allows users to play a 5-letter word guessing game with authentication, game state persistence, and statistics tracking. Built with love and collaboration by a team of four students from Moringa School.
 
-> **Team Members**: Fidel Martins, Hassan, Abdiazi, Ben  
+> **Team Members**: Fidel Martins, Jaylan Saad, Joy Hassan, Abdiaziz Ali, Beckam 
 > **Institution**: Moringa School  
 > **Project Type**: MVP (Minimum Viable Product)
 
