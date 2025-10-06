@@ -72,15 +72,11 @@ function App() {
   }, [currentGuess, guesses, gameStatus, gameStarted]);
 
   const onLogin = async (username, password) => {
-    console.log('onLogin called with username:', username);
     setLoading(true);
     try {
       const response = await authAPI.login(username, password);
-      console.log('Login response:', response);
       authService.setAuthData(response.token, username);
-      console.log('Auth data set, token:', authService.getToken());
       setUser(username);
-      console.log('User set to:', username);
       setError('');
     } catch (error) {
       setError('Login failed. Please check your credentials.');
@@ -191,17 +187,9 @@ function App() {
   };
 
   // Screens
-  console.log('Rendering App, user:', user, 'gameStarted:', gameStarted, 'gameStatus:', gameStatus);
-  if (!user) {
-    console.log('Rendering Login');
-    return <Login onLogin={onLogin} onRegister={onRegister} />;
-  }
-  if (!gameStarted) {
-    console.log('Rendering Landing');
-    return <Landing onStart={() => setGameStarted(true)} />;
-  }
+  if (!user) return <Login onLogin={onLogin} onRegister={onRegister} />;
+  if (!gameStarted) return <Landing onStart={() => setGameStarted(true)} />;
   if (gameStatus !== 'playing') {
-    console.log('Rendering Ending');
     return (
       <Ending
         won={gameStatus === 'won'}
