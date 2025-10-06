@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 
 export default function Login({ onLogin, onRegister }) {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username.trim() && password.trim()) {
+    if (username.trim() && password.trim() && (!isRegistering || email.trim())) {
       if (isRegistering) {
-        onRegister(username.trim(), password);
+        onRegister(username.trim(), email.trim(), password);
       } else {
         onLogin(username.trim(), password);
       }
@@ -55,6 +56,24 @@ export default function Login({ onLogin, onRegister }) {
             marginBottom: '1rem',
           }}
         />
+        {isRegistering && (
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            style={{
+              width: '100%',
+              padding: '0.8rem',
+              fontSize: '1.1rem',
+              background: '#3a3a3c',
+              border: '1px solid #565758',
+              borderRadius: '0.4rem',
+              color: '#fff',
+              marginBottom: '1rem',
+            }}
+          />
+        )}
         <input
           type="password"
           value={password}

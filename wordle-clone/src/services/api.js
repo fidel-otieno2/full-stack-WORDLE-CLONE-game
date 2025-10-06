@@ -48,7 +48,7 @@ export const authAPI = {
   // Login user
   async login(username, password) {
     try {
-      const response = await apiClient.post('/login', { username, password });
+      const response = await apiClient.post('/auth/login', { username, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Login failed');
@@ -56,9 +56,9 @@ export const authAPI = {
   },
 
   // Register new user
-  async register(username, password) {
+  async register(username, email, password) {
     try {
-      const response = await apiClient.post('/register', { username, password });
+      const response = await apiClient.post('/auth/register', { username, email, password });
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Registration failed');
@@ -83,7 +83,7 @@ export const gameAPI = {
   // Get daily word
   async getDailyWord() {
     try {
-      const response = await apiClient.get('/word');
+      const response = await apiClient.get('/game/word');
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to fetch daily word');
@@ -93,7 +93,7 @@ export const gameAPI = {
   // Validate a guess
   async validateGuess(guess, wordId) {
     try {
-      const response = await apiClient.post('/guess', {
+      const response = await apiClient.post('/game/guess', {
         guess: guess.toUpperCase(),
         wordId
       });
@@ -106,7 +106,7 @@ export const gameAPI = {
   // Submit game result
   async submitGameResult(gameData) {
     try {
-      const response = await apiClient.post('/game', gameData);
+      const response = await apiClient.post('/game/result', gameData);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Failed to submit game result');

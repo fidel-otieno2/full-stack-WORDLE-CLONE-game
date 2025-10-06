@@ -67,7 +67,7 @@ def submit_game_result():
     word = data.get("wordId")
     guesses = data.get("guesses")
     won = data.get("won")
-    time_taken = data.get("timeTaken")
+    time_taken = data.get("time")
 
     # Validate data types
     if not isinstance(guesses, int) or not isinstance(time_taken, int) or not isinstance(won, bool) or not isinstance(word, str):

@@ -86,10 +86,10 @@ function App() {
     }
   };
 
-  const onRegister = async (username, password) => {
+  const onRegister = async (username, email, password) => {
     setLoading(true);
     try {
-      const response = await authAPI.register(username, password);
+      const response = await authAPI.register(username, email, password);
       authService.setAuthData(response.token, username);
       setUser(username);
       setError('');

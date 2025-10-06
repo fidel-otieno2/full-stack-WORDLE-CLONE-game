@@ -6,15 +6,15 @@
 .env.production.local
 
 # Backend specific
-backend/.env
-backend/instance/
-backend/server.log
-backend/__pycache__/
-backend/*.pyc
-backend/*.pyo
-backend/*.pyd
-backend/Pipfile.lock
-backend/requirements.txt.lock
+wordle-backend/.env
+wordle-backend/instance/
+wordle-backend/server.log
+wordle-backend/__pycache__/
+wordle-backend/*.pyc
+wordle-backend/*.pyo
+wordle-backend/*.pyd
+wordle-backend/Pipfile.lock
+wordle-backend/requirements.txt.lock
 
 # Database files
 *.db
@@ -22,11 +22,12 @@ backend/requirements.txt.lock
 *.sqlite3
 
 # Migrations (keep alembic.ini and env.py, but ignore generated versions)
-backend/migrations/versions/
+wordle-backend/migrations/versions/
 
 # Logs
 *.log
 logs/
+nohup.out
 
 # OS generated files
 .DS_Store
@@ -55,3 +56,19 @@ build/
 # Temporary files
 *.tmp
 *.temp
+
+# Python virtual environments
+venv/
+wordle-backend/venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Frontend build artifacts
+wordle-clone/.vite/
+wordle-clone/dist/
+wordle-clone/build/
+
+# Supabase (if any)
+supabase/

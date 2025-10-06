@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 import os
-from models import d
+from models import db
 load_dotenv()
 
 app = Flask(__name__)
@@ -27,8 +27,6 @@ with app.app_context():
     # Add default user for testing
     from models import User
     if not User.query.filter_by(username='testuser').first():
-        from flask_bcrypt import Bcrypt
-        bcrypt = Bcrypt(app)
         hashed_pw = bcrypt.generate_password_hash('testpass').decode('utf-8')
         default_user = User(username='testuser', email='test@example.com', password_hash=hashed_pw)
         db.session.add(default_user)
