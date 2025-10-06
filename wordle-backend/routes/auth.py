@@ -21,14 +21,18 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({'error': 'Email taken'}), 400
 
-    hashed = bcrypt.generate_password_hash(password)
-    user = User(username=username, email=email, password_hash=hashed)
-    db.session.add(user)
-    db.session.commit()
+    try:
+        hashed = bcrypt.generate_password_hash(password)
+        user = User(username=username, email=email, password_hash=hashed)
+        db.session.add(user)
+        db.session.commit()
 
-    # After commit, user.id is set
-    token = create_access_token(identity=user.id)
-    return jsonify({'token': token, 'message': 'User registered'}), 201
+        # After commit, user.id is set
+        token = create_access_token(identity=user.id)
+        return jsonify({'token': token, 'message': 'User registered'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
