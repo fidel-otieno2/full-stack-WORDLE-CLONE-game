@@ -42,7 +42,7 @@ A full stack Wordle game clone built with **React** and **Vite** for the fronten
   - User registration and login with JWT tokens
   - Daily word retrieval and guess validation
   - Game result submission and statistics tracking
-  - SQLite database for persistence
+  - posgreSQL database for persistence
   - Alembic migrations for database schema management
 
 ---
@@ -70,7 +70,7 @@ A full stack Wordle game clone built with **React** and **Vite** for the fronten
   - Flask-JWT-Extended for authentication
   - SQLAlchemy ORM
   - Alembic for migrations
-  - SQLite database
+  - posgreSQL database
 
 ---
 
