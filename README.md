@@ -125,7 +125,7 @@ npm run dev  # Starts the frontend dev server on port 5173
 6. For the build command, use: `pip install -r requirements.txt`.
 7. For the start command, use: `gunicorn app:app`.
 8. Set environment variables in Render dashboard:
-   - `DATABASE_URL` (your database connection string from Render's PostgreSQL database service - create a PostgreSQL database in Render first. If not set, it defaults to SQLite for testing)
+   - `DATABASE_URL` (your database connection string - either from Render's PostgreSQL database service or from Supabase. If using Supabase, copy the connection string from your Supabase project settings. If not set, it defaults to SQLite for testing)
    - `JWT_SECRET_KEY` (your JWT secret key - generate a secure random string)
    - `FLASK_ENV` (optional, set to `production` for production environment)
    - `PORT` (optional, Render usually sets this automatically, but you can specify if needed)
