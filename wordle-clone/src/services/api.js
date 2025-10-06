@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { authService } from './auth';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://full-stack-wordle-clone-game-4.onrender.com';
+const API_BASE_URL = 'http://localhost:5001';
 
 // Create axios instance with default config
 const apiClient = axios.create({
@@ -61,7 +61,7 @@ export const authAPI = {
       const response = await apiClient.post('/auth/register', { username, email, password });
       return response.data;
     } catch (error) {
-      throw new Error(error.response?.data?.message || 'Registration failed');
+      throw new Error(error.response?.data?.error || 'Registration failed');
     }
   },
 

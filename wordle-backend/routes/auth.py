@@ -1,7 +1,7 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token
-from flask_bcrypt import bcrypt
 from models import db, User
+from extensions import bcrypt
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -22,7 +22,7 @@ def register():
         return jsonify({'error': 'Email taken'}), 400
 
     try:
-        hashed = bcrypt.generate_password_hash(password)
+        hashed = bcrypt.generate_password_hash(password).decode('utf-8')
         user = User(username=username, email=email, password_hash=hashed)
         db.session.add(user)
         db.session.commit()
