@@ -21,7 +21,7 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({'error': 'Email taken'}), 400
 
-    hashed = bcrypt.generate_password_hash(password).decode('utf-8')
+    hashed = bcrypt.generate_password_hash(password)
     user = User(username=username, email=email, password_hash=hashed)
     db.session.add(user)
     db.session.commit()
