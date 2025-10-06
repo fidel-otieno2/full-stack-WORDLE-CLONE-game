@@ -125,8 +125,11 @@ npm run dev  # Starts the frontend dev server on port 5173
 6. For the build command, use: `pip install -r requirements.txt`.
 7. For the start command, use: `gunicorn app:app`.
 8. Set environment variables in Render dashboard:
-   - `DATABASE_URL` (your database connection string, e.g. PostgreSQL URL from Render's database service)
+   - `DATABASE_URL` (your database connection string from Render's PostgreSQL database service - create a PostgreSQL database in Render first)
    - `JWT_SECRET_KEY` (your JWT secret key - generate a secure random string)
+   - `FLASK_ENV` (optional, set to `production` for production environment)
+   - `PORT` (optional, Render usually sets this automatically, but you can specify if needed)
+   - Any other environment variables your app requires (e.g., email service credentials, third-party API keys)
 9. Click "Create Web Service" to start the deployment.
 10. Render will build and deploy your backend, providing a public URL.
 
