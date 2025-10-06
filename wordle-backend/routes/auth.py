@@ -26,6 +26,7 @@ def register():
     db.session.add(user)
     db.session.commit()
 
+    # After commit, user.id is set
     token = create_access_token(identity=user.id)
     return jsonify({'token': token, 'message': 'User registered'}), 201
 
