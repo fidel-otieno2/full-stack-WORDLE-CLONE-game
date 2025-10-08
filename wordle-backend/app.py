@@ -11,7 +11,7 @@ from models import db
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "https://full-stack-wordle-clone-game.vercel.app", "http://localhost:3000" "https://full-stack-wordle-clone-game-4.onrender.com"])
+CORS(app, origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "https://full-stack-wordle-clone-game.vercel.app", "http://localhost:3000"])
 
 # Config - Use PostgreSQL with Supabase credentials from environment variables
 database_url = os.getenv("DATABASE_URL")
