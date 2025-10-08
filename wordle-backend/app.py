@@ -15,14 +15,21 @@ CORS(app, origins=["http://localhost:5173", "http://localhost:5174", "http://loc
 
 # Config - Use PostgreSQL with Supabase credentials from environment variables
 database_url = os.getenv("DATABASE_URL")
-if database_url and database_url.startswith("postgres://"):
-    # Fix for SQLAlchemy URL scheme change
-    database_url = database_url.replace("postgres://", "postgresql://", 1)
-if database_url and "postgresql+psycopg://" not in database_url:
-    database_url = database_url.replace("postgresql://", "postgresql+psycopg://", 1)
-if database_url and "?sslmode=" not in database_url:
-    database_url += "?sslmode=require"
-app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+if database_url:
+    try:
+        if database_url.startswith("postgres://"):
+            # Fix for SQLAlchemy URL scheme change
+            database_url = database_url.replace("postgres://", "postgresql://", 1)
+        if "postgresql+psycopg://" not in database_url:
+            database_url = database_url.replace("postgresql://", "postgresql+psycopg://", 1)
+        if "?sslmode=" not in database_url:
+            database_url += "?sslmode=require"
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    except Exception as e:
+        print(f"Error parsing DATABASE_URL: {e}, falling back to SQLite")
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "supersecret")
 
