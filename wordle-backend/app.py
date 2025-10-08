@@ -11,7 +11,7 @@ from models import db
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "https://full-stack-wordle-clone-game.vercel.app", "http://localhost:3000"])
+CORS(app, origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "https://full-stack-wordle-clone-game.vercel.app", "http://localhost:3000" "https://full-stack-wordle-clone-game-4.onrender.com"])
 
 # Config - Use PostgreSQL with Supabase credentials from environment variables
 database_url = os.getenv("DATABASE_URL")
@@ -31,7 +31,8 @@ bcrypt.init_app(app)
 jwt = JWTManager(app)
 migrate = Migrate(app, db)
 
-with app.app_context():
+# The databse set up
+with app.app_context(): 
     db.create_all()
 
 from routes.auth import auth_bp
