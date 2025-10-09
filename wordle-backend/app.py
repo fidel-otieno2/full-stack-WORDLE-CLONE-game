@@ -20,8 +20,8 @@ if database_url:
         if database_url.startswith("postgres://"):
             # Fix for SQLAlchemy URL scheme change
             database_url = database_url.replace("postgres://", "postgresql://", 1)
-        if "postgresql+psycopg://" not in database_url:
-            database_url = database_url.replace("postgresql://", "postgresql+psycopg://", 1)
+        if "postgresql+psycopg2://" not in database_url:
+            database_url = database_url.replace("postgresql://", "postgresql+psycopg2://", 1)
         if "?sslmode=" not in database_url:
             database_url += "?sslmode=require"
         app.config["SQLALCHEMY_DATABASE_URI"] = database_url
