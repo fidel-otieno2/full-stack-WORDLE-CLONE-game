@@ -19,7 +19,20 @@ cors_origins = os.getenv("CORS_ORIGINS", "").split(",") if os.getenv("CORS_ORIGI
     "http://localhost:5175",
     "http://localhost:3000",
 ]
-CORS(app, origins=[o.strip() for o in cors_origins if o.strip()])
+CORS(
+    app,
+    origins=[o.strip() for o in cors_origins if o.strip()],
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    expose_headers=["Content-Type", "Authorization"],
+)
+
+# Debug helper: log enabled origins at startup (useful when deployed)
+try:
+    print("[CORS] Enabled origins:", [o.strip() for o in cors_origins if o.strip()] or "<none>")
+except Exception:
+    pass
 
 
 # Config - Use PostgreSQL with Supabase credentials from environment variables
@@ -86,7 +99,6 @@ def serve_assets(filename):
 
 # SPA fallback: serve index.html only for non-static routes
 @app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
 def serve_frontend(path):
     # Backend routes should always win.
     if path.startswith("auth/") or path.startswith("game/"):
