@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { authService } from './auth';
 
-const API_BASE_URL = 'http://localhost:5001';
 
 // Create axios instance with default config
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/';
+
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
 
 // Add request interceptor to include auth token
 apiClient.interceptors.request.use(
