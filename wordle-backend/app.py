@@ -75,6 +75,15 @@ def serve_static(filename):
         return send_from_directory(static_dir, filename)
     return jsonify({"error": "Static directory not found"}), 404
 
+# Vite assets live under /assets/* in index.html
+@app.route("/assets/<path:filename>")
+def serve_assets(filename):
+    assets_dir = os.path.join(static_dir, "assets")
+    if os.path.isdir(assets_dir):
+        return send_from_directory(assets_dir, filename)
+    return jsonify({"error": "Assets directory not found"}), 404
+
+
 # SPA fallback: serve index.html only for non-static routes
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
@@ -83,9 +92,10 @@ def serve_frontend(path):
     if path.startswith("auth/") or path.startswith("game/"):
         return jsonify({"error": "Not found"}), 404
 
-    # Don't intercept static assets requests
+    # Don't intercept static assets requests (these are served by dedicated routes)
     if path.startswith("static/") or path.startswith("assets/"):
         return jsonify({"error": "Not found"}), 404
+
 
     if os.path.isdir(static_dir) and os.path.exists(os.path.join(static_dir, "index.html")):
         return send_from_directory(static_dir, "index.html")
