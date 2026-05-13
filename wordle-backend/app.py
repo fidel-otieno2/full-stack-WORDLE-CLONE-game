@@ -65,7 +65,17 @@ from flask import send_from_directory, render_template
 app.register_blueprint(auth_bp, url_prefix="/auth")
 app.register_blueprint(game_bp, url_prefix="/game")
 
-# Serve React static files (if present)
+# Serve React static files (built assets)
+# IMPORTANT: do not let the SPA fallback intercept /static/* or /assets/*.
+static_dir = os.path.join(app.root_path, "static")
+
+@app.route("/static/<path:filename>")
+def serve_static(filename):
+    if os.path.isdir(static_dir):
+        return send_from_directory(static_dir, filename)
+    return jsonify({"error": "Static directory not found"}), 404
+
+# SPA fallback: serve index.html only for non-static routes
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve_frontend(path):
@@ -73,17 +83,15 @@ def serve_frontend(path):
     if path.startswith("auth/") or path.startswith("game/"):
         return jsonify({"error": "Not found"}), 404
 
-    # If a built file exists in static/, serve it.
-    static_dir = os.path.join(app.root_path, "static")
-    # Protect if static dir doesn't exist
-    if os.path.isdir(static_dir):
-        index_path = os.path.join(static_dir, "index.html")
-        if os.path.exists(index_path):
-            # For SPA routes: always return index.html
-            return send_from_directory(static_dir, "index.html")
+    # Don't intercept static assets requests
+    if path.startswith("static/") or path.startswith("assets/"):
+        return jsonify({"error": "Not found"}), 404
 
-    # Fallback template
+    if os.path.isdir(static_dir) and os.path.exists(os.path.join(static_dir, "index.html")):
+        return send_from_directory(static_dir, "index.html")
+
     return render_template("index.html")
+
 
 
 if __name__ == "__main__":
